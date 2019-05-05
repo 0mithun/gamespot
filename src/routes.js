@@ -3,8 +3,10 @@ import  VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 import  Home from './components/home/Index'
+import SignIn from './components/signin/index'
 const routes =[
     {path:'/', component:Home, name:'home'},
+    {path:'/signin', component:SignIn, name:'signin'},
 ]
 
 const router = new VueRouter({
