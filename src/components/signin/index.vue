@@ -87,7 +87,7 @@
     }
 </script>
 
-<style >
+<style scoped>
     .input_field.invalid input, .input_field.invalid select{
         border:1px solid red;
     }

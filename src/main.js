@@ -6,12 +6,14 @@ import VueResource from 'vue-resource'
 import store from './store/store'
 import Button from './components/UI/button.vue'
 import Vuelidate from 'vuelidate'
-
+import wysiwyg from "vue-wysiwyg-lite";
 
 
 Vue.use(VueMaterial)
 Vue.use(VueResource)
 Vue.use(Vuelidate)
+
+Vue.use(wysiwyg, {}); // config is
 
 Vue.http.options.root = ''
 
