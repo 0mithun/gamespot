@@ -26,5 +26,6 @@ export default {
 
 <style>
   @import "~vue-wysiwyg-lite/dist/vueWysiwyg.css";
+
   @import "./assets/style.css";
 </style>

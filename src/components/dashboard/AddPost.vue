@@ -46,6 +46,13 @@
             </div>
             <button type="submit">Add Post</button>
         </form>
+        <md-dialog :md-active="dialog">
+            <p>Your post has not content, are you sure you want to post this?</p>
+            <md-dialog-actions>
+                <md-button class="md-accent md-raised md-dense" @click="dialogOnCancel">Oop, I want to add it.</md-button>
+                <md-button class="md-primary md-raised md-dense" @click="dialogOnConfirm">Yes I'm sure</md-button>
+            </md-dialog-actions>
+        </md-dialog>
     </div>
 </template>
 
@@ -54,6 +61,7 @@
     export default {
         data() {
             return {
+                dialog:false,
                 formData: {
                     title:'',
                     desc:'',
@@ -75,7 +83,30 @@
                     required
                 }
             }
-        }
+        },
+        methods: {
+            submitHandler() {
+                if(!this.$v.$invalid){
+                    if (this.formData.content ===''){
+                        this.dialog = true
+                    } else{
+                        this.addPost()
+                    }
+                }else{
+                    alert("Something is wrong")
+                }
+            },
+            addPost(){
+                console.log('Add Post')
+            },dialogOnCancel(){
+                this.dialog = false
+            },
+            dialogOnConfirm(){
+                this.dialog = false
+                this.addPost()
+            }
+
+        },
     }
 </script>
 

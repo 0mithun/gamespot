@@ -9,6 +9,7 @@ import Vuelidate from 'vuelidate'
 import wysiwyg from "vue-wysiwyg-lite";
 
 
+import 'vue-material/dist/vue-material.min.css'
 Vue.use(VueMaterial)
 Vue.use(VueResource)
 Vue.use(Vuelidate)

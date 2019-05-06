@@ -4,15 +4,27 @@ Vue.use(VueRouter)
 
 import store from './store/store'
 
+
+
+import  Home from './components/home/Index'
+import SignIn from './components/signin/index'
+
+import Dashboard from './components/dashboard/index'
+import MainDashboard from './components/dashboard/MainDashboard'
+import AddPost from './components/dashboard/AddPost'
+import  ListPost from './components/dashboard/ListPost'
+
+
+
 const authGuard ={
     beforeEnter(to, from, next){
         const redirect = ()=>{
             if(store.state.admin.token){
-               if(to.path === '/signin'){
-                   next('/dashboard')
-               }else{
-                  next()
-               }
+                if(to.path === '/signin'){
+                    next('/dashboard')
+                }else{
+                    next()
+                }
             }else {
                 if(to.path === '/signin'){
                     next()
@@ -28,26 +40,18 @@ const authGuard ={
         }else{
             redirect()
         }
-
     }
 }
-
-import  Home from './components/home/Index'
-import SignIn from './components/signin/index'
-
-import Dashboard from './components/dashboard/index'
-import MainDashboard from './components/dashboard/MainDashboard'
-import AddPost from './components/dashboard/AddPost'
-import  ListPost from './components/dashboard/ListPost'
 
 const routes =[
     {path:'/', component:Home, name:'home'},
     {path:'/signin', component:SignIn, name:'signin', ...authGuard},
-    {path:'/dashboard', component:Dashboard, name:'dashboard', ...authGuard, children:[
-            {path:'', component:MainDashboard},
+    {path:'/dashboard', component:Dashboard, name:'dashboard', children:[
+            {path:'/', component:MainDashboard},
             {path:'add-post', component:AddPost},
             {path:'list-post', component:ListPost},
-        ]
+        ],
+        ...authGuard,
     },
 ]
 
