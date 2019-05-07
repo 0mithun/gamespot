@@ -16,7 +16,7 @@ Vue.use(Vuelidate)
 
 Vue.use(wysiwyg, {}); // config is
 
-Vue.http.options.root = ''
+Vue.http.options.root = 'https://gamespot-4fe72.firebaseio.com/'
 
 
 // import {MdCard} from 'vue-material/dist/components'

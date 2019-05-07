@@ -1,6 +1,7 @@
 <template>
     <div class="dashboard_form">
         <h1>Add Post</h1>
+        <div v-if="addPostStatus" class="post_succesfull">Your post was posted</div>
         <form @submit.prevent="submitHandler">
             <div class="input_field" :class="{invalid:$v.formData.title.$error}">
                 <label for="Title">Title</label>
@@ -53,6 +54,7 @@
                 <md-button class="md-primary md-raised md-dense" @click="dialogOnConfirm">Yes I'm sure</md-button>
             </md-dialog-actions>
         </md-dialog>
+
     </div>
 </template>
 
@@ -70,6 +72,15 @@
                 }
             }
         },
+        computed: {
+            addPostStatus() {
+                let status = this.$store.getters['admin/addPostStatus'];
+                if(status){
+                    this.clearForm()
+                }
+                return status
+            }
+        },
         validations:{
             formData: {
                 title:{
@@ -77,7 +88,7 @@
                 },
                 desc:{
                     required,
-                    maxLength:maxLength(5)
+                    maxLength:maxLength(100)
                 },
                 rating:{
                     required
@@ -97,13 +108,20 @@
                 }
             },
             addPost(){
-                console.log('Add Post')
+                this.$store.dispatch('admin/addPost', this.formData)
             },dialogOnCancel(){
                 this.dialog = false
             },
             dialogOnConfirm(){
                 this.dialog = false
                 this.addPost()
+            },
+            clearForm(){
+                this.$v.$reset()
+                this.formData.title = ''
+                this.formData.desc = ''
+                this.formData.content = ''
+                this.formData.rating = ''
             }
 
         },
