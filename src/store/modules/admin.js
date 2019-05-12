@@ -64,6 +64,9 @@ const admin = {
         },
         imageUpload(state, imageData){
             state.imageUpload = imageData.secure_url
+        },
+        clearImageUpload(state){
+            state.imageUpload = null
         }
     },
     actions: {
@@ -132,6 +135,10 @@ const admin = {
                     commit('imageUpload', data)
                 })
                 .catch(err=>console.log(err))
+        },
+
+        clearImageUpload({commit}){
+            commit('clearImageUpload')
         }
     }
 }

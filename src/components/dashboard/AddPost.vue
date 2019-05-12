@@ -11,6 +11,7 @@
                     <input
                             type="file"
                             @change="processFile($event)"
+                            ref="myFileInput"
                     >
                 </div>
                 <div class="input_field" :class="{invalid:$v.formData.title.$error}">
@@ -73,14 +74,11 @@
         <div  class="right_align">
             <img :src="imageUpload" alt="">
         </div>
-
-
     </div>
 </template>
 
 <script>
     import {required, minLength, maxLength} from 'vuelidate/lib/validators'
-
     export default {
         data() {
             return {
@@ -99,6 +97,7 @@
                 let status = this.$store.getters['admin/addPostStatus'];
                 if (status) {
                     this.clearForm()
+                    this.$store.commit('admin/clearImageUpload')
                 }
                 return status
             },
@@ -145,10 +144,15 @@
             },
             clearForm() {
                 this.$v.$reset()
-                this.formData.title = ''
-                this.formData.desc = ''
-                this.formData.content = ''
-                this.formData.rating = ''
+                this.$refs.myFileInput.value = ''
+                this.formData = {
+                    img : '',
+                    title : '',
+                    desc : '',
+                    content : '',
+                    rating : ''
+                }
+
             },
             processFile(event) {
                 let file = event.target.files[0]
@@ -156,6 +160,10 @@
             }
 
         },
+
+        destroyed() {
+            this.$store.commit('admin/clearImageUpload')
+        }
     }
 </script>
 
