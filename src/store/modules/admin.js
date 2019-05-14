@@ -11,7 +11,8 @@ const admin = {
         authFailed: false,
         refreshLoading:true,
         addPost:false,
-        imageUpload: null
+        imageUpload: null,
+        adminPosts: null
 
     },
     getters: {
@@ -29,6 +30,9 @@ const admin = {
         },
         imageUploadStatus(state){
             return state.imageUpload
+        },
+        getAdminPosts(state){
+            return state.adminPosts
         }
     },
     mutations: {
@@ -67,6 +71,9 @@ const admin = {
         },
         clearImageUpload(state){
             state.imageUpload = null
+        },
+        getAdminPosts(state, adminPosts){
+            state.adminPosts = adminPosts
         }
     },
     actions: {
@@ -139,6 +146,34 @@ const admin = {
 
         clearImageUpload({commit}){
             commit('clearImageUpload')
+        },
+        getAdminPosts({commit}){
+            Vue.http.get(`posts.json?orderBy="$key"`)
+                .then(res=>res.json())
+                .then(data=>{
+                    let posts = []
+                    for(let key in data){
+                        posts.push({
+                            ...data[key],
+                            id:key
+                        })
+                    }
+                    commit('getAdminPosts', posts)
+                })
+                .catch(err=>console.log(err))
+        },
+        deletePost({commit, state}, id){
+            Vue.http.delete(`posts/${id}.json?auth=${state.token}`)
+                .then(res=>{
+                    let newPosts = []
+                    state.adminPosts.forEach(post=>{
+                        if(post.id != id){
+                            newPosts.push(post)
+                        }
+                    })
+                    commit('getAdminPosts', newPosts)
+                })
+                .catch(err=>console.log(err))
         }
     }
 }

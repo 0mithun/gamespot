@@ -4,8 +4,6 @@ Vue.use(VueRouter)
 
 import store from './store/store'
 
-
-
 import  Home from './components/home/Index'
 import SignIn from './components/signin/index'
 
@@ -13,8 +11,8 @@ import Dashboard from './components/dashboard/index'
 import MainDashboard from './components/dashboard/MainDashboard'
 import AddPost from './components/dashboard/AddPost'
 import  ListPost from './components/dashboard/ListPost'
-
-
+import Post from './components/post/post'
+import NotFound from './components/404/Index'
 
 const authGuard ={
     beforeEnter(to, from, next){
@@ -53,6 +51,8 @@ const routes =[
         ],
         ...authGuard,
     },
+    {path:'/post/:id', component:Post},
+    {path:'*', component:NotFound}
 ]
 
 const router = new VueRouter({

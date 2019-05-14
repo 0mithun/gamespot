@@ -3,7 +3,7 @@
         <router-link :to="linkTo" :class="['button_default', ...addClass]" :style="ovStyle" v-if="type =='link'">
             <slot></slot>
         </router-link>
-        <div v-if="type == 'btn'"  :class="['button_default', ...addClass]" :style="ovStyle" >
+        <div v-if="type == 'btn'"  :class="['button_default', ...addClass]" :style="ovStyle"  @click="action">
             <slot></slot>
         </div>
     </div>
@@ -30,6 +30,12 @@
             type:{
                 type:String,
                 default: 'link'
+            },
+            action:{
+                type:Function,
+                default:function () {
+
+                }
             }
         }
     }
